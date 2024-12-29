@@ -1,24 +1,20 @@
-import java.util.*;
-
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int start = 0; // Start index of the substring
-        int max = 0; // To track the maximum length
-        Map<Character, Integer> charIndexMap = new HashMap<>(); // To store the last index of each character
-
+        int start = 0; // Start index of the current substring
+        int max = 0;   // To track the maximum length of substring without repeating characters
+        // Iterate through each character in the string using the `end` pointer
         for (int end = 0; end < s.length(); end++) {
-            // If the character is already in the map, move the start pointer to the right of its last occurrence
-            if (charIndexMap.containsKey(s.charAt(end))) {
-                start = Math.max(start, charIndexMap.get(s.charAt(end)) + 1);
+            // Iterate over the substring from start to end - 1
+            for (int i = start; i < end; i++) {
+                // If the current character is already in the substring, move start
+                if (s.charAt(i) == s.charAt(end)) {
+                    start = i + 1;
+                    break; // Break the loop once we find a repeat
+                }
             }
-            
-            // Update the maximum length
+            // Update the max length of substring without repeating characters
             max = Math.max(max, end - start + 1);
-
-            // Update the last seen index of the current character
-            charIndexMap.put(s.charAt(end), end);
         }
-
-        return max;
+        return max; // Return the maximum length found
     }
 }
