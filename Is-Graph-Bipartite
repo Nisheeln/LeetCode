@@ -1,0 +1,37 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int[] color = new int[graph.length];
+        Arrays.fill(color,-1);
+        for(int i = 0;  i < graph.length; i++){
+            if(color[i] == -1){
+                if(!isBipartiteUtil(graph,i,color)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean isBipartiteUtil(int[][] graph, int curr, int[] color){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(curr);
+        color[curr] = 0;
+        while(!q.isEmpty()){
+            int c = q.remove();
+            for(int i : graph[c]){
+                if(color[i]==-1){
+                    q.add(i);
+                    if(color[c]==0){
+                        color[i] = 1;
+                    }
+                    else{
+                        color[i] = 0;
+                    }
+                }
+                else if(color[i] == color[c]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
